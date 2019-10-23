@@ -76,6 +76,7 @@ class RegistrationForm extends React.Component{
         return (
             
             <div className="Container">
+
                 <div className="Registration">
                     <h2> Register your account with us </h2>
                     <h4> Join us to save your personal information</h4>

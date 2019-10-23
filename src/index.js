@@ -1,20 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import Registration from '../src/Registration';
 import * as serviceWorker from './serviceWorker';
 
-const applicationLayout = ()=>{
+const RegistrationLayout = () => {
 	return (
 		<div>
-			<Registration/>
+			<Registration />
 		</div>
 	)
 }
 
 
-ReactDOM.render(<applicationLayout />, document.getElementById('root'));
+ReactDOM.render(<RegistrationLayout />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
