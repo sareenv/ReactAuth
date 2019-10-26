@@ -6,7 +6,7 @@ This repository contains authentication system front-end part written in React a
    ------------ |
    antd            |
    axios             |
-   react-google-recaptcha
-             |
+   react-google-recaptcha |
+             
 
 
