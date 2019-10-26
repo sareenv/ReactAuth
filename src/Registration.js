@@ -14,12 +14,18 @@ class RegistrationForm extends React.Component{
         this.state = {
             isHiddenPassword: true,
             value: '', 
+            username: '',
+            password: '',
+            email: '',
+            firstName: '',
+            lastName: '',
+            dateofBirth: '',
             captchaValue: ''
         }
         this.checkPasswordInputType = this.checkPasswordInputType.bind(this)
         this.changeHiddenState = this.changeHiddenState.bind(this)
         this.checkPasswordHiddenEye = this.checkPasswordHiddenEye.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleCaptchaChange = this.handleCaptchaChange.bind(this)
     }
@@ -30,27 +36,42 @@ class RegistrationForm extends React.Component{
         console.log(`The captcha value is ${this.state.captchaValue}`)
     }
 
-    handleChange = (event) =>{
-        this.setState({value: event.target.value})
+    handleInputChange = (event) =>{
+        /**
+         * Here need to update the state of the multiple inputs.
+        */
+       console.log(event.target)
+       if(event.target === undefined){
+           return
+       }
+       this.setState({
+        [event.target.name]: event.target.value
+       })
     }
 
     handleSubmit =  (event) => {
         event.preventDefault();
-        console.log('Trying to submit the form')
-        if(this.state.captchaValue === ''){
-            return alert('first solve the captcha')
-        }
+        /*
+        * Send the data to the backend api which also ensures that captcha is solve
+        and the perform backend validation on data. 
 
-        /** 
-         * Make http request to the server which sends the captcha response from google to my api which then verifies.
+        The method below sends the essential information to register new user in the database.
+
         */
-
-       axios.post('http://localhost:8080/captcha', {captcharesp: this.state.captchaValue}).then((resp)=>{
-           alert(resp)
+       
+        axios.post('http://localhost:8080/register', {
+            username: this.state.username,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName, 
+            // profileImageUrl we don't have it at the moment. 
+            email:this.state.email,
+            captcharesp: this.state.captchaValue
+        }).then((resp)=>{
+           console.log(resp)
        }).catch((error)=>{
-            alert(error)
+            console.log(error)
        })
-
     }
 
     checkPasswordInputType = () => {
@@ -83,45 +104,45 @@ class RegistrationForm extends React.Component{
                     <hr/>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Item label="First Name">
-                        
-                            <Input placeholder="Enter first name" onChange={this.handleChange} />
+                            <Input name="firstName" placeholder="Enter first name" value={this.state.firstName} onChange={this.handleInputChange}  />
                         </Form.Item>
 
                         <Form.Item label="Last Name">
-                            <Input placeholder="Enter last name" />
+                            <Input name ="lastName" placeholder="Enter last name" value={this.state.lastName} onChange={this.handleInputChange}/>
                         </Form.Item>
 
 
                         <Form.Item label="Email">
+                            
                             {getFieldDecorator('email',{
+                                initialValue: '',
                                 rules:[
                                     {
                                         type: 'email',
                                         message: 'Not a valid email'
-                                    }
+                                    } 
                                 ]
-                            })(<Input placeholder="Enter email" />)}      
+                            })(<Input placeholder="Enter email" name="email" onChange={this.handleInputChange}/>)}      
                         </Form.Item>
 
                         <Form.Item label="Username">
-                            <Input placeholder="Enter username" />
+                            <Input placeholder="Enter username" name="username" value={this.state.username} onChange={this.handleInputChange}/>
                         </Form.Item>
 
                         <Form.Item label="Password">
-                            <Input placeholder="Enter password" type={this.checkPasswordInputType()} suffix={<Button type="link" onClick={this.changeHiddenState} size="small"> <Icon type={this.checkPasswordHiddenEye()} theme="twoTone"/> </Button>} />
-                            
-                        </Form.Item>
-
-                        <Form.Item label = "Date of birth">
-                            <DatePicker format={dateFormat} placeholder="Birthday"/>
+                            <Input placeholder="Enter password" name="password" value={this.state.password} onChange={this.handleInputChange}  type={this.checkPasswordInputType()} suffix={<Button type="link" onClick={this.changeHiddenState} size="small"> <Icon type={this.checkPasswordHiddenEye()} theme="twoTone"/> </Button>} />
                         </Form.Item>
                         
-                        <ReCAPTCHA sitekey = "6LdPjb4UAAAAAAhEXE3N_LhDu0j0Se-15wdvFovc"
+                        <Form.Item label = "Date of birth">
+                            <DatePicker name= "dateofBirth" format={dateFormat} placeholder="Birthday" onChange={this.handleInputChange}/>
+                        </Form.Item>
+                    
+                        
+                        <ReCAPTCHA sitekey = "6LdPjb4UAAAAAAhEXE3N_LhDu0j0Se-15wdvFovc" value ={this.state.captchaValue}
                         onChange = {this.handleCaptchaChange}
                         />    
 
                         <br/>
-
                         <center> <input type="submit" value="Submit" className="submitButton"/> </center>
 
                     </Form>
