@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button, DatePicker, Icon} from 'antd';
+import {Form, Input, Button, DatePicker, Icon, Alert} from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import './Registration.css';
@@ -12,6 +12,9 @@ class RegistrationForm extends React.Component{
     constructor(){
         super()
         this.state = {
+            isAlertHidden: true,
+            isResponseSucess: false,
+            alertMessage: '',
             isHiddenPassword: true,
             value: '', 
             username: '',
@@ -29,7 +32,6 @@ class RegistrationForm extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleCaptchaChange = this.handleCaptchaChange.bind(this)
     }
-
 
     handleCaptchaChange = (value) => {
         this.setState({captchaValue: value})
@@ -52,11 +54,9 @@ class RegistrationForm extends React.Component{
     handleSubmit =  (event) => {
         event.preventDefault();
         /*
-        * Send the data to the backend api which also ensures that captcha is solve
+        Send the data to the backend api which also ensures that captcha is solve
         and the perform backend validation on data. 
-
         The method below sends the essential information to register new user in the database.
-
         */
        
         axios.post('http://localhost:8080/register', {
@@ -68,10 +68,44 @@ class RegistrationForm extends React.Component{
             email:this.state.email,
             captcharesp: this.state.captchaValue
         }).then((resp)=>{
-           console.log(resp)
+            console.log(resp)
+            this.setState({
+                isAlertHidden: false,
+                isResponseSucess: true,
+                alertType: 'sucess',
+                alertMessage: 'Sucessfully Created the user in the system',
+
+                username: '',
+                password: '',
+                email: '',
+                firstName: '',
+                lastName: '',
+                dateofBirth: '',
+                captchaValue: ''
+
+            })
        }).catch((error)=>{
-            console.log(error)
+            console.log(error)   
+            this.setState({
+                isAlertHidden: false,
+                alertType: 'failure',
+                alertMessage: 'Some error, registering the user'
+            })
        })
+    }
+
+    showAlert(){
+        if (this.state.isAlertHidden === false){
+            let alertType = "success"
+            if(this.state.isResponseSucess === false){
+                alertType = "error"
+            }
+            return (
+                <div>
+                    <Alert message={this.state.alertMessage} type={alertType} /> 
+                </div>
+            )
+        }
     }
 
     checkPasswordInputType = () => {
@@ -95,10 +129,10 @@ class RegistrationForm extends React.Component{
     render(){
         const { getFieldDecorator } = this.props.form;
         return (
-            
-            <div className="Container">
 
+            <div className="Container">
                 <div className="Registration">
+                    {this.showAlert()}
                     <h2> Register your account with us </h2>
                     <h4> Join us to save your personal information</h4>
                     <hr/>
