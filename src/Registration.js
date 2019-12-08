@@ -54,17 +54,12 @@ class RegistrationForm extends React.Component{
 
     handleSubmit =  (event) => {
         event.preventDefault();
-        /*
-        Send the data to the backend api which also ensures that captcha is solve
-        and the perform backend validation on data. 
-        The method below sends the essential information to register new user in the database.
-        */
+    
         axios.post('http://localhost:5050/register', {
             username: this.state.username,
             password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName, 
-            // profileImageUrl we don't have it at the moment. 
             email:this.state.email,
             captcharesp: this.state.captchaValue
         }).then((resp)=>{
@@ -84,28 +79,23 @@ class RegistrationForm extends React.Component{
                 captchaValue: ''
             })
         }).catch((error)=>{
-            console.log(error)   
+            console.log(error.message)   
             this.setState({
                 isAlertHidden: false,
                 alertType: 'failure',
-                alertMessage: 'Some error, registering the user'
+                alertMessage: 'Some error, registering the user',
+
+                username: '',
+                password: '',
+                email: '',
+                firstName: '',
+                lastName: '',
+                dateofBirth: '',
+                captchaValue: ''
             })
         })
     }
 
-    showAlert(){
-        if (this.state.isAlertHidden === false){
-            let alertType = "success"
-            if(this.state.isResponseSucess === false){
-                alertType = "error"
-            }
-            return (
-                <div>
-                    <Alert message={this.state.alertMessage} type={alertType} /> 
-                </div>
-            )
-        }
-    }
 
     checkPasswordInputType = () => {
         if(this.state.isHiddenPassword === true){
@@ -131,7 +121,7 @@ class RegistrationForm extends React.Component{
 
             <div className="Container">
                 <div className="Registration">
-                    {this.showAlert()}
+
                     <h2> Register your account with us </h2>
                     <h4> Join us to save your personal information</h4>
                     <hr/>
