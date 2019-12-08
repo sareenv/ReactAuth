@@ -15,15 +15,6 @@ class Security extends React.Component {
         }
     }
 
-    customElement() {
-        return (
-            <div>
-                <h3> Returning something new </h3>
-            </div>
-        )
-    }
-    
-
     render() {
 
         const data1 = [{title: 'Logout from All devices', description: 'This option allows users to logout the account from all devices'}, 
@@ -44,7 +35,6 @@ class Security extends React.Component {
                             <List.Item.Meta
                                 description={item.description} 
                             />
-
                         </List.Item>   
                     )}
                 />
