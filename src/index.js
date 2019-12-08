@@ -15,7 +15,7 @@ const Layout = () => {
 						<Registration />
 					</Route>
 
-					<Route  path="/contact">
+					<Route  path="/security">
 						<Security />
 					</Route>
 
