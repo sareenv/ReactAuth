@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button, DatePicker, Icon, Alert} from 'antd';
+import {Form, Input, Button, DatePicker, Icon} from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import './Registration.css';
