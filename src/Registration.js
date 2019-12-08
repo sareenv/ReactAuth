@@ -42,13 +42,14 @@ class RegistrationForm extends React.Component{
         /**
          * Here need to update the state of the multiple inputs.
         */
-       console.log(event.target)
-       if(event.target === undefined){
-           return
-       }
-       this.setState({
-        [event.target.name]: event.target.value
-       })
+        console.log(event.toString())
+        if(event.target === undefined){
+            return
+        }
+        console.log(event.target.value)
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
     handleSubmit =  (event) => {
@@ -58,8 +59,7 @@ class RegistrationForm extends React.Component{
         and the perform backend validation on data. 
         The method below sends the essential information to register new user in the database.
         */
-       
-        axios.post('http://localhost:8080/register', {
+        axios.post('http://localhost:5050/register', {
             username: this.state.username,
             password: this.state.password,
             firstName: this.state.firstName,
@@ -82,16 +82,15 @@ class RegistrationForm extends React.Component{
                 lastName: '',
                 dateofBirth: '',
                 captchaValue: ''
-
             })
-       }).catch((error)=>{
+        }).catch((error)=>{
             console.log(error)   
             this.setState({
                 isAlertHidden: false,
                 alertType: 'failure',
                 alertMessage: 'Some error, registering the user'
             })
-       })
+        })
     }
 
     showAlert(){
@@ -168,7 +167,7 @@ class RegistrationForm extends React.Component{
                         </Form.Item>
                         
                         <Form.Item label = "Date of birth">
-                            <DatePicker name= "dateofBirth" format={dateFormat} placeholder="Birthday" onChange={this.handleInputChange}/>
+                            <DatePicker name= "dateofBirth" format={dateFormat} selectedValue={this.state.dateofBirth} placeholder="Birthday" onChange={this.handleInputChange}/>
                         </Form.Item>
                     
                         
