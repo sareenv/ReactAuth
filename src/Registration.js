@@ -3,7 +3,7 @@ import {Form, Input, Button, DatePicker, Icon} from 'antd';
 import { Select } from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
-import './Registration.css';
+import './forms.css';
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Option = Select.Option;
@@ -40,6 +40,7 @@ class RegistrationForm extends React.Component{
         this.handleSecurityQuestion1Change = this.handleSecurityQuestion1Change.bind(this)
         this.handleBirthdayChange = this.handleBirthdayChange.bind(this)
         this.handleSecurityQuestion2Change = this.handleSecurityQuestion2Change.bind(this)
+        this.resetStates = this.resetStates.bind(this)
     }
 
 
@@ -61,50 +62,54 @@ class RegistrationForm extends React.Component{
         })
     }
 
+    resetStates() {
+        this.setState({
+            username: '',
+            password: '',
+            email: '',
+            firstName: '',
+            lastName: '',
+            dateofBirth: '',
+            captchaValue: '',
+            securityAnswer1: '', 
+            securityAnswer2: ''
+        })
+    }
+
     handleSubmit =  (event) => {
         event.preventDefault();
         // this url can be changed once the api is published. 
-        axios.post('http://localhost:5050/register', {
-            username: this.state.username,
-            password: this.state.password,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            securityQuestion1: this.state.securityQuestion1, 
-            securityAnswer1: this.state.securityAnswer1,
-            securityQuestion2: this.state.securityQuestion2,
-            securityAnswer2: this.state.securityAnswer2,
-            email:this.state.email,
-            captcharesp: this.state.captchaValue
-        }).then((resp)=>{
+        const url = 'https://kv304cem.herokuapp.com/register'
+        const data = {
+                username: this.state.username,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                securityQuestion1: this.state.securityQuestion1, 
+                securityAnswer1: this.state.securityAnswer1,
+                securityQuestion2: this.state.securityQuestion2,
+                securityAnswer2: this.state.securityAnswer2,
+                email:this.state.email,
+                captcharesp: this.state.captchaValue
+        }
+
+        axios.post(url, data).then((resp)=>{
             console.log(resp)
-            this.setState({
-                isAlertHidden: false,
-                isResponseSucess: true,
-                alertType: 'sucess',
-                alertMessage: 'Sucessfully Created the user in the system',
-                username: '',
-                password: '',
-                email: '',
-                firstName: '',
-                lastName: '',
-                dateofBirth: '',
-                captchaValue: ''
-            })
-        }).catch((error)=>{
-            console.log(error.message)   
+                this.setState({
+                    isAlertHidden: false,
+                    isResponseSucess: true,
+                    alertType: 'sucess',
+                    alertMessage: 'Sucessfully, created the user',
+                })
+                this.resetStates()
+            }).catch((error)=>{
+            console.log(error.response)   
             this.setState({
                 isAlertHidden: false,
                 alertType: 'failure',
-                alertMessage: 'Some error, registering the user',
-
-                username: '',
-                password: '',
-                email: '',
-                firstName: '',
-                lastName: '',
-                dateofBirth: '',
-                captchaValue: ''
+                alertMessage: 'Some error, registering the user'
             })
+            this.resetStates()
         })
     }
 
@@ -171,7 +176,7 @@ class RegistrationForm extends React.Component{
                                         message: 'Not a valid email'
                                     } 
                                 ]
-                            })(<Input placeholder="Enter email" name="email" onChange={this.handleInputChange}/>)}      
+                            })(<Input placeholder="Enter email" name="email" value={this.state.email} onChange={this.handleInputChange}/>)}      
                         </Form.Item>
 
                         <Form.Item label="Username">
@@ -194,7 +199,7 @@ class RegistrationForm extends React.Component{
                         </Form.Item>
 
                         <Form.Item label="Security Answer1">
-                            <Input placeholder="Enter Security Answer1" name="securityAnswer1" value={this.state.securityAnswer1} onChange={this.handleInputChange}  type={this.checkPasswordInputType()} suffix={<Button type="link" onClick={this.changeHiddenState} size="small"> <Icon type={this.checkPasswordHiddenEye()} theme="twoTone"/> </Button>} />
+                            <Input placeholder="Enter Security Answer1" name="securityAnswer1" value={this.state.securityAnswer1} onChange={this.handleInputChange}/>
                         </Form.Item>
 
                         <Form.Item label="Security Question 2">

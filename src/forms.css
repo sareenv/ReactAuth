@@ -4,11 +4,20 @@ body{
 
 .Container{
     margin-top: 25px;
-   display: flex;
-   justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .Registration{
+    background-color: white;
+    padding: 20px 20px 20px 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 400px;
+    border-radius: 15px;
+}
+
+.Upadte{
     background-color: white;
     padding: 20px 20px 20px 20px;
     margin-top: 30px;
