@@ -7,7 +7,6 @@ import './Registration.css';
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Option = Select.Option;
-const dateFormat = 'YYYY/MM/DD';
 const securityQuestions = ['Faviourate Dog', 'Name of high school', 'Birth Location', 'Faviourate Hobby']
 
 class RegistrationForm extends React.Component{
@@ -39,6 +38,8 @@ class RegistrationForm extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleCaptchaChange = this.handleCaptchaChange.bind(this)
         this.handleSecurityQuestion1Change = this.handleSecurityQuestion1Change.bind(this)
+        this.handleBirthdayChange = this.handleBirthdayChange.bind(this)
+        this.handleSecurityQuestion2Change = this.handleSecurityQuestion2Change.bind(this)
     }
 
     handleCaptchaChange = (value) => {
@@ -58,13 +59,16 @@ class RegistrationForm extends React.Component{
 
     handleSubmit =  (event) => {
         event.preventDefault();
-        console.log(this.state.securityQuestion1)
-        console.log(this.state.securityAnswer1)
+        // this url can be changed once the api is published. 
         axios.post('http://localhost:5050/register', {
             username: this.state.username,
             password: this.state.password,
             firstName: this.state.firstName,
-            lastName: this.state.lastName, 
+            lastName: this.state.lastName,
+            securityQuestion1: this.state.securityQuestion1, 
+            securityAnswer1: this.state.securityAnswer1,
+            securityQuestion2: this.state.securityQuestion2,
+            securityAnswer2: this.state.securityAnswer2,
             email:this.state.email,
             captcharesp: this.state.captchaValue
         }).then((resp)=>{
@@ -127,7 +131,7 @@ class RegistrationForm extends React.Component{
 
     handleSecurityQuestion2Change = (value) => {
         this.setState({
-            securityQuestion1: value
+            securityQuestion2: value
         })
     }
 
@@ -204,7 +208,7 @@ class RegistrationForm extends React.Component{
                         </Form.Item>
                         
                         <Form.Item label = "Date of birth">
-                            <DatePicker name= "dateofBirth" format={dateFormat} selectedValue={this.state.dateofBirth} placeholder="Birthday" onChange={this.handleInputChange}/>
+                            <DatePicker name= "dateofBirth"  selectedValue={this.state.dateofBirth} placeholder="Birthday" onChange={this.handleBirthdayChange}/>
                         </Form.Item>
                     
                         
