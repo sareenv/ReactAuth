@@ -7,6 +7,9 @@ This repository contains authentication system front-end part written in React a
    ```antd ``` <br>
    ```axios ``` <br>
    ```react-google-recaptcha``` <br>
-             
+
+### Deployed Link
+
+This project is now deployed to the heroku and can be used, <a href="https://kv304cemcode.herokuapp.com "> Click Here</a> to open this project.
 
 

@@ -23,7 +23,7 @@ const Layout = () => {
 					<Route  path="/updateDetails">
 						<UpdateDetails />
 					</Route>
-
+					
 				</Switch>
 			</Router>
 		</div>
