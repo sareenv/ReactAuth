@@ -4,9 +4,9 @@ This repository contains authentication system front-end part written in React a
 
 ### Dependencies Installation
 
-   ```npm i antd --save ```
-   ```npm i axios --save   ```
-   ```react-google-recaptcha --save```
+   ```npm i antd --save ``` <br>
+   ```npm i axios --save   ``` <br>
+   ```react-google-recaptcha --save``` <br>
              
 
 
