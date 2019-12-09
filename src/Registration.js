@@ -1,17 +1,24 @@
 import React from 'react';
 import {Form, Input, Button, DatePicker, Icon} from 'antd';
+import { Select } from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import './Registration.css';
 import ReCAPTCHA from "react-google-recaptcha";
 
+const Option = Select.Option;
 const dateFormat = 'YYYY/MM/DD';
+const securityQuestions = ['Faviourate Dog', 'Name of high school', 'Birth Location', 'Faviourate Hobby']
 
 class RegistrationForm extends React.Component{
     
     constructor(){
         super()
         this.state = {
+            securityQuestion1: 'Faviourate Dog',
+            securityAnswer1: '',
+            securityQuestion2: 'Name of high school',
+            securityAnswer2: '',
             isAlertHidden: true,
             isResponseSucess: false,
             alertMessage: '',
@@ -31,6 +38,7 @@ class RegistrationForm extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleCaptchaChange = this.handleCaptchaChange.bind(this)
+        this.handleSecurityQuestion1Change = this.handleSecurityQuestion1Change.bind(this)
     }
 
     handleCaptchaChange = (value) => {
@@ -39,14 +47,10 @@ class RegistrationForm extends React.Component{
     }
 
     handleInputChange = (event) =>{
-        /**
-         * Here need to update the state of the multiple inputs.
-        */
-        console.log(event.toString())
+        console.log('The event is ' + event)
         if(event.target === undefined){
             return
         }
-        console.log(event.target.value)
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -54,7 +58,8 @@ class RegistrationForm extends React.Component{
 
     handleSubmit =  (event) => {
         event.preventDefault();
-    
+        console.log(this.state.securityQuestion1)
+        console.log(this.state.securityAnswer1)
         axios.post('http://localhost:5050/register', {
             username: this.state.username,
             password: this.state.password,
@@ -69,7 +74,6 @@ class RegistrationForm extends React.Component{
                 isResponseSucess: true,
                 alertType: 'sucess',
                 alertMessage: 'Sucessfully Created the user in the system',
-
                 username: '',
                 password: '',
                 email: '',
@@ -115,10 +119,24 @@ class RegistrationForm extends React.Component{
         this.setState({isHiddenPassword: !this.state.isHiddenPassword}) 
     }
 
+    handleSecurityQuestion1Change = (value) => {
+        this.setState({
+            securityQuestion1: value
+        })
+    }
+
+    handleSecurityQuestion2Change = (value) => {
+        this.setState({
+            securityQuestion1: value
+        })
+    }
+
     render(){
         const { getFieldDecorator } = this.props.form;
+        
+        
         return (
-
+            
             <div className="Container">
                 <div className="Registration">
 
@@ -154,6 +172,35 @@ class RegistrationForm extends React.Component{
 
                         <Form.Item label="Password">
                             <Input placeholder="Enter password" name="password" value={this.state.password} onChange={this.handleInputChange}  type={this.checkPasswordInputType()} suffix={<Button type="link" onClick={this.changeHiddenState} size="small"> <Icon type={this.checkPasswordHiddenEye()} theme="twoTone"/> </Button>} />
+                        </Form.Item>
+
+                        <Form.Item label="Security Question 1">
+                            <Select
+                                defaultValue={securityQuestions[0]}
+                                onChange={this.handleSecurityQuestion2Change}
+                            > 
+                            {securityQuestions.map(question => (
+                                <Option key={question} > {question} </Option>
+                            ))}
+                            </Select> 
+                        </Form.Item>
+
+                        <Form.Item label="Security Answer1">
+                            <Input placeholder="Enter Security Answer1" name="securityAnswer1" value={this.state.securityAnswer1} onChange={this.handleInputChange}  type={this.checkPasswordInputType()} suffix={<Button type="link" onClick={this.changeHiddenState} size="small"> <Icon type={this.checkPasswordHiddenEye()} theme="twoTone"/> </Button>} />
+                        </Form.Item>
+
+                        <Form.Item label="Security Question 2">
+                            <Select
+                                defaultValue={securityQuestions[1]}
+                            > 
+                            {securityQuestions.map(question => (
+                                <Option key={question}>{question}</Option>
+                            ))}
+                            </Select> 
+                        </Form.Item>
+
+                        <Form.Item label="Security Answer2">
+                            <Input placeholder="Enter Security Answer1" name="securityAnswer2" value={this.state.securityAnswer2} onChange={this.handleInputChange} />
                         </Form.Item>
                         
                         <Form.Item label = "Date of birth">
