@@ -42,13 +42,17 @@ class RegistrationForm extends React.Component{
         this.handleSecurityQuestion2Change = this.handleSecurityQuestion2Change.bind(this)
     }
 
+
+    handleBirthdayChange(date, dateString) {
+        console.log(date)
+    }
+
     handleCaptchaChange = (value) => {
         this.setState({captchaValue: value})
         console.log(`The captcha value is ${this.state.captchaValue}`)
     }
 
     handleInputChange = (event) =>{
-        console.log('The event is ' + event)
         if(event.target === undefined){
             return
         }
