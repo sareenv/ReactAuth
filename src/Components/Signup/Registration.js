@@ -3,9 +3,8 @@ import {Form, Input, Button, DatePicker, Icon} from 'antd';
 import { Select } from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
-import './forms.css';
+import '../../styles/forms.css';
 import ReCAPTCHA from "react-google-recaptcha";
-
 const Option = Select.Option;
 const securityQuestions = ['Faviourate Dog', 'Name of high school', 'Birth Location', 'Faviourate Hobby']
 
@@ -158,11 +157,11 @@ class RegistrationForm extends React.Component{
                     <hr/>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Item label="First Name">
-                            <Input name="firstName" placeholder="Enter first name" value={this.state.firstName} onChange={this.handleInputChange}  />
+                            <Input className="customInput" name="firstName" placeholder="Enter first name" value={this.state.firstName} onChange={this.handleInputChange}  />
                         </Form.Item>
 
                         <Form.Item label="Last Name">
-                            <Input name ="lastName" placeholder="Enter last name" value={this.state.lastName} onChange={this.handleInputChange}/>
+                            <Input className="customInput" name ="lastName" placeholder="Enter last name" value={this.state.lastName} onChange={this.handleInputChange}/>
                         </Form.Item>
 
 
@@ -176,15 +175,15 @@ class RegistrationForm extends React.Component{
                                         message: 'Not a valid email'
                                     } 
                                 ]
-                            })(<Input placeholder="Enter email" name="email" value={this.state.email} onChange={this.handleInputChange}/>)}      
+                            })(<Input className="customInput" placeholder="Enter email" name="email" value={this.state.email} onChange={this.handleInputChange}/>)}      
                         </Form.Item>
 
                         <Form.Item label="Username">
-                            <Input placeholder="Enter username" name="username" value={this.state.username} onChange={this.handleInputChange}/>
+                            <Input className="customInput" placeholder="Enter username" name="username" value={this.state.username} onChange={this.handleInputChange}/>
                         </Form.Item>
 
                         <Form.Item label="Password">
-                            <Input placeholder="Enter password" name="password" value={this.state.password} onChange={this.handleInputChange}  type={this.checkPasswordInputType()} suffix={<Button type="link" onClick={this.changeHiddenState} size="small"> <Icon type={this.checkPasswordHiddenEye()} theme="twoTone"/> </Button>} />
+                            <Input className="customInput" placeholder="Enter password" name="password" value={this.state.password} onChange={this.handleInputChange}  type={this.checkPasswordInputType()} suffix={<Button type="link" onClick={this.changeHiddenState} size="small"> <Icon type={this.checkPasswordHiddenEye()} theme="twoTone"/> </Button>} />
                         </Form.Item>
 
                         <Form.Item label="Security Question 1">
@@ -199,7 +198,7 @@ class RegistrationForm extends React.Component{
                         </Form.Item>
 
                         <Form.Item label="Security Answer1">
-                            <Input placeholder="Enter Security Answer1" name="securityAnswer1" value={this.state.securityAnswer1} onChange={this.handleInputChange}/>
+                            <Input className="customInput" placeholder="Enter Security Answer1" name="securityAnswer1" value={this.state.securityAnswer1} onChange={this.handleInputChange}/>
                         </Form.Item>
 
                         <Form.Item label="Security Question 2">
@@ -213,7 +212,7 @@ class RegistrationForm extends React.Component{
                         </Form.Item>
 
                         <Form.Item label="Security Answer2">
-                            <Input placeholder="Enter Security Answer1" name="securityAnswer2" value={this.state.securityAnswer2} onChange={this.handleInputChange} />
+                            <Input className="customInput" placeholder="Enter Security Answer1" name="securityAnswer2" value={this.state.securityAnswer2} onChange={this.handleInputChange} />
                         </Form.Item>
                         
                         <Form.Item label = "Date of birth">

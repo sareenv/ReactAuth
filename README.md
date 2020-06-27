@@ -9,7 +9,6 @@ This repository contains authentication system front-end part written in React a
    ```react-google-recaptcha``` <br>
 
 ### Deployed Link
-
-This project is now deployed to the heroku and can be used, <a href="https://kv304cemcode.herokuapp.com "> Click Here</a> to open this project.
+The project serves as the basic authentication template with some advanced features such as OAuth with Platforms like Facebook and logs the login history of user.
 
 

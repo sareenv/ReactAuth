@@ -1,0 +1,37 @@
+.dummyText{
+    color: black;
+    text-align: center;
+    padding: 20px;
+    font-size: x-large;
+}
+
+.dummybackground {
+    background-color: white;
+    width: "100%";
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.customInput {
+    height: 40px;
+    width: 250px;
+    margin-bottom: 10px;
+}
+
+.customButton {
+    color: black;
+    height: 40px;
+    margin: 5px;
+    background-color: blue;
+    color: white;
+    width: 250px;
+}
+
+.customLink {
+    color: black;
+}

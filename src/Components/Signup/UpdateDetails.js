@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, Input} from 'antd';
 import fetch from 'isomorphic-fetch'
 import 'antd/dist/antd.css';
-import './forms.css'
+import '../../styles/forms.css'
 
 const {TextArea} = Input 
 
